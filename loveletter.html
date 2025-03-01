@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Montserrat:wght@300;400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #ffe8e8 0%, #ffccd5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px rgba(179, 30, 89, 0.2);
+            backdrop-filter: blur(4px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 195, 215, 0.5);
+            position: relative;
+            z-index: 1;
+            margin: 20px;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d4145a;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .highlight {
+            font-family: 'Dancing Script', cursive;
+            color: #d4145a;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        
+        .love-letter {
+            position: relative;
+            padding: 30px;
+            border: 1px solid #ffccd5;
+            border-radius: 10px;
+            background-color: #fff5f7;
+            margin-bottom: 2rem;
+            transform-origin: center;
+            transition: all 0.3s ease;
+        }
+        
+        .love-letter:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(212, 20, 90, 0.2);
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #d4145a;
+            text-align: right;
+            margin-top: 1rem;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: #d4145a;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        .button {
+            background: linear-gradient(45deg, #d4145a, #f9748f);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(212, 20, 90, 0.3);
+        }
+        
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(212, 20, 90, 0.4);
+        }
+        
+        .button:active {
+            transform: translateY(-1px);
+        }
+        
+        .hidden-message {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            font-family: 'Dancing Script', cursive;
+            color: #d4145a;
+            text-align: center;
+            font-size: 1.3rem;
+            padding: 0 10px;
+        }
+        
+        .show-message {
+            max-height: 500px;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .special-button {
+            background: none;
+            border: 2px solid #d4145a;
+            color: #d4145a;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .special-button:hover {
+            background: #d4145a;
+            color: white;
+        }
+        
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .memory-box {
+            display: none;
+            background: #fff5f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ffccd5;
+        }
+        
+        .memory-title {
+            font-family: 'Dancing Script', cursive;
+            color: #d4145a;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .letter-animate {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.3s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .photo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .photo-frame {
+            width: 80%;
+            max-width: 300px;
+            height: 300px;
+            margin: 0 auto 1rem auto;
+            border: 10px solid white;
+            box-shadow: 0 5px 15px rgba(212, 20, 90, 0.2);
+            position: relative;
+            overflow: hidden;
+            background-color: #fff0f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-frame:hover .photo-placeholder {
+            transform: scale(1.05);
+        }
+        
+        .photo-caption {
+            font-family: 'Dancing Script', cursive;
+            color: #d4145a;
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            padding: 0 20px;
+        }
+        
+        .photo-message {
+            font-style: italic;
+            margin-top: 0.5rem;
+            padding: 0 30px;
+        }
+        
+        .photo-section {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff0f5;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(212, 20, 90, 0.15);
+            border: 1px solid #ffccd5;
+        }
+        
+        .photos-title {
+            font-family: 'Dancing Script', cursive;
+            color: #d4145a;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts"></div>
+    
+    <div class="container">
+        <h1 id="title">For My Love</h1>
+        
+        <div class="love-letter">
+            <p>My dearest,</p>
+            <p>Every day with you feels like a new adventure. From the moment you entered my life, you've filled it with <span class="highlight">joy</span>, <span class="highlight">laughter</span>, and <span class="highlight">love</span> beyond measure.</p>
+            <p>You've shown me what it means to truly love and be loved. Your smile brightens my darkest days, and your embrace is my favorite place in the world.</p>
+            <p>Thank you for being my partner, my confidant, and my best friend. I cherish every moment we spend together.</p>
+            <p class="signature">Forever Yours</p>
+        </div>
+        
+        <button class="button" id="secret-button">Reveal My Secret</button>
+        
+        <div class="hidden-message" id="hidden-message">
+            <p>You mean everything to me. I fall more in love with you each day.</p>
+            <p>You are my sunshine, my heart, my everything.</p>
+        </div>
+        
+        <div class="photo-section">
+            <h2 class="photos-title">Your Cutie's Pictures, Baby</h2>
+            
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="pic3.jpg" alt="Add your photo here" class="photo-placeholder">
+                </div>
+                <div class="photo-caption">My Favorite Picture of you Baby</div>
+                <p class="photo-message">Remember this day? The way you smiled made me fall in love all over again. You're the most beautiful person I've ever known, inside and out.</p>
+            </div>
+            
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="pic1.jpg" alt="Add your photo here" class="photo-placeholder">
+                </div>
+                <div class="photo-caption">Just Being Cute</div>
+                <p class="photo-message">This is the face I wake up thinking about every morning. Your adorable smile and those eyes that see right through to my soul. You're my everything.</p>
+            </div>
+            
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="pic2.jpg" alt="Add your photo here" class="photo-placeholder">
+                </div>
+                <div class="photo-caption">The Day We Met</div>
+                <p class="photo-message">From the moment I saw you, I knew you were special. Little did I know you would become the most important person in my life. I'm so lucky to have you.</p>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button class="special-button" data-memory="favorite-moment">Favorite Moment</button>
+            <button class="special-button" data-memory="future-dreams">Our Future</button>
+        </div>
+        
+        <div class="memory-box" id="favorite-moment">
+            <h3 class="memory-title">My Favorite Moment With You</h3>
+            <p>When I'm talking to you, chatting with you, it make's me smile, and the way you laugh, and the way you talk to my mom, it's make me even more happy.</p>
+        </div>
+        
+        <div class="memory-box" id="future-dreams">
+            <h3 class="memory-title">Dreams For Our Future</h3>
+            <p>I dream of building a life filled with adventures big and small. Morning coffees and goodnight kisses. Travels to places we've always wanted to see. A home filled with laughter and love. I can't wait to create these memories with you.</p>
+        </div>
+    </div>
+
+    <script>
+        // Animate title letters
+        window.onload = function() {
+            const title = document.getElementById('title');
+            const text = title.textContent;
+            title.textContent = '';
+            
+            for (let i = 0; i < text.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = text[i];
+                span.classList.add('letter-animate');
+                span.style.animationDelay = `${i * 0.1}s`;
+                title.appendChild(span);
+            }
+            
+            // Create floating hearts
+            createFloatingHearts();
+        };
+        
+        // Secret message reveal
+        document.getElementById('secret-button').addEventListener('click', function() {
+            const hiddenMessage = document.getElementById('hidden-message');
+            hiddenMessage.classList.toggle('show-message');
+            
+            if (hiddenMessage.classList.contains('show-message')) {
+                this.textContent = 'Hide My Secret';
+                createHeartBurst();
+            } else {
+                this.textContent = 'Reveal My Secret';
+            }
+        });
+        
+        // Memory buttons
+        const memoryButtons = document.querySelectorAll('.special-button');
+        memoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const memoryId = this.getAttribute('data-memory');
+                const memoryBoxes = document.querySelectorAll('.memory-box');
+                
+                // Hide all memory boxes
+                memoryBoxes.forEach(box => {
+                    box.style.display = 'none';
+                });
+                
+                // Show selected memory box
+                document.getElementById(memoryId).style.display = 'block';
+                
+                // Scroll to the memory box
+                document.getElementById(memoryId).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+        
+        // Create floating hearts in background
+        function createFloatingHearts() {
+            const container = document.querySelector('.floating-hearts');
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💘', '💓'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                
+                // Random position and timing
+                const left = Math.random() * 100;
+                const animationDuration = 5 + Math.random() * 10;
+                const animationDelay = Math.random() * 5;
+                
+                heart.style.left = `${left}%`;
+                heart.style.animationDuration = `${animationDuration}s`;
+                heart.style.animationDelay = `${animationDelay}s`;
+                
+                container.appendChild(heart);
+            }
+        }
+        
+        // Create heart burst effect
+        function createHeartBurst() {
+            const container = document.querySelector('.container');
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💘', '💓'];
+            
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                
+                // Position at center of container
+                const containerRect = container.getBoundingClientRect();
+                heart.style.position = 'fixed';
+                heart.style.left = `${containerRect.left + containerRect.width / 2}px`;
+                heart.style.top = `${containerRect.top + containerRect.height / 2}px`;
+                
+                // Random animation
+                const randomDuration = 1 + Math.random() * 2;
+                const randomDelay = Math.random() * 0.5;
+                heart.style.animationDuration = `${randomDuration}s`;
+                heart.style.animationDelay = `${randomDelay}s`;
+                
+                document.body.appendChild(heart);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, randomDuration * 1000 + randomDelay * 1000);
+            }
+        }
+    </script>
+</body>
+</html>
